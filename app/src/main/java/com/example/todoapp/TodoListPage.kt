@@ -66,7 +66,9 @@ fun TodoListPage(viewModel: TodoViewModel){
             LazyColumn(
                 content = {
                     itemsIndexed(it){index: Int, item: Todo ->
-                        TodoItem(item = item)
+                        TodoItem(item = item, onDelete = {
+                            viewModel.deleteTodo(item.id)
+                        })
                     }
                 }
             )
@@ -80,7 +82,7 @@ fun TodoListPage(viewModel: TodoViewModel){
 }
 
 @Composable
-fun TodoItem(item: Todo) {
+fun TodoItem(item: Todo, onDelete : () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -104,7 +106,7 @@ fun TodoItem(item: Todo) {
                 color = Color.White
             )
         }
-        IconButton(onClick = { }) {
+        IconButton(onClick = onDelete) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_delete_24),
                 contentDescription = "Delete",
